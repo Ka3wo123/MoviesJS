@@ -9,9 +9,7 @@ const Navbar = () => {
         <div className="navbar">
             <Logo />
             <SearchPane />
-            <div className="nav-list">
-                <Linkers />
-            </div>
+            <Linkers/>
             <Login />
         </div>
     );

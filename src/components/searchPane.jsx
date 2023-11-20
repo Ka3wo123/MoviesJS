@@ -3,8 +3,7 @@ import iconSearch from "../images/searchIcon.png"
 
 
 const SearchPane = () => {
-    return (
-        <div className="search-pane-wrapper">
+    return (        
             <div className="search-pane">
                 <img src={iconSearch} alt="Icon search" className="icon-search-pane" />
                 <input
@@ -13,10 +12,7 @@ const SearchPane = () => {
                     placeholder="Search for movies!"
                     style={{ paddingLeft: 55 }}
                 />
-            </div>
-        </div>
-
-
+            </div>    
     )
 }
 

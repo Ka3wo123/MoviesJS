@@ -1,74 +1,213 @@
-.logo {
-  width: 100px;
-  height: 60px;
-  border-radius: 20px;
-  margin-left: 20px;
-  cursor: pointer;
+  .logo {
+    width: 100px;
+    height: 60px;
+    border-radius: 20px;
+    margin-left: 10px;
+    cursor: pointer;
 
-}
+  }
 
-.logo-wrapper {
-  margin: 10px;
-}
+  .logo-wrapper {
+    margin: 0px;
+  }
 
-.navbar {
-  display: flex;
-  justify-content: center;
-  background-color: #000;
-  width: 100%;
-  padding: 10px;
-  border-bottom: 3px solid #BC25BF;
-}
+  .navbar {
+    display: flex;
+    justify-content: center;
+    background-color: #000;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    border-bottom: 2px solid #BC25BF;
+  }
 
-.search-pane-wrapper {
-  position: relative;  
-}
 
-.search-pane {
-  margin-right: auto;
-  margin-left: auto;
-  padding: 12px;
-  width: 300%;
-}
+  .search-pane {
+    margin-right: auto;
+    margin-left: 20px;
+    width: 100vh;
+  }
 
-.icon-search-pane {
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  top: 15px;
-  left: 25px;
-  cursor: pointer;
-}
+  .icon-search-pane {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 32px;
+    left: 145px;
+    cursor: pointer;    
+  }
 
-.nav-list {
-  list-style-type: none;
+  .nav-list {
+    list-style-type: none;
+  }
+
+  .nav-item {
+    margin-right: 10px;
+    color: #fff;
+    cursor: pointer;
+    display: inline;
+  }
+
+
+  .nav-item::before {
+    content: "\2022";
+    color: #BC25BF;
+    font-size: 40px;
+    position: relative;
+    top: 8px;
+  }
+
+  .copy {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-top: 2px solid #BC25BF;
+    margin: 0px;
+  }
+
+
+  .btn-primary:hover {
+    background-color: #BC25BF !important;
+    color: #fff !important;
+  }
+
+
+
+  .explore-movies {
+    display: flex;
+    justify-content: center;
+    color: #d8d2d2;
+    font-size: 30px;
+    margin-top: 60px;
+  }
+
+  .select-options {
+    display: flex;
+    justify-content: space-evenly;
+
+  }
+
+  .form-select {
+    background-color: #BC25BF !important;
+    color: #d8d2d2 !important;
+    width: 30vh !important;
+    border-color: #000 !important;
+    overflow-y: auto;
+  }
+
+  .movie-table {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    justify-content: space-evenly;
+
+  }
+
+  .movie {
+    margin: 10px;
+    background-color: #000;
+    border: 2px solid #BC25BF;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  .movie img {
+    width: 250px;
+    height: 400px;
+    object-fit: cover;
+  }
+
+  .movie p {
+    text-align: left;
+    font-size: 15px;
+    margin-left: 5px;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .movie:hover {
+    background-color: #BC25BF;
+    box-shadow: 0 0 10px 5px #be6cc0;
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+
+  .carousel-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 30px;
+  }
   
-}
+  .carousel {   
+    border: 1px solid #BC25BF;    
+    background-color: #000;    
+    border-radius: 3px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .carousel img {    
+    width: 400px;
+    height: 560px;
+    object-fit: cover;
+  }
+  
+  .carousel p {
+    text-align: center;
+    font-size: 15px;
+    margin-top: 5px;
+    font-weight: bold;
+    color: #fff;
+  }
 
-.nav-item {
-  margin-right: 20px;
-  color: #fff;
-  cursor: pointer;
-  padding-left: 20px;
-  display: inline;
-}
+  .login-page{
+    margin: 100px;
+    padding: 50px;
+    width: auto;
+    height: 30vi;
+    border: 2px solid #BC25BF;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-around;    
+  }
+
+  .login-page p {
+    font-size: 30px;
+    color: #fff;
+  }
+
+  .login-register-container {
+    width: 400px;
+    height: auto;
+    border: 1px solid #BC25BF;
+    border-radius: 10px;
+    padding: 17px;
+
+  }
+
+  .user-container {
+    height: auto;
+  }
+
+  .label {
+    color: #fff;
+    font-size: 15px;
+    margin-left: 10px;
+  }
+
+  .custom-form-control {
+    background-color: #414141 !important;
+    border-color: #BC25BF !important;    
+    margin-bottom: 10px;
+    color:#fff !important;
+  }
+
+  .vertical-line {
+    border-left: 2px solid #BC25BF;
+    height: 100%;
+    margin: 0 20px;
+  }
 
 
-.nav-item::before {
-  content: "\2022";
-  color: #BC25BF;
-  font-size: 50px;
-  position: relative;
-  top: 10px;
-}
-
-.copy {
-  display: flex;
-  color: #fff;
-  justify-content: center;
-}
-
-.btn-primary:hover {
-  background-color: #BC25BF !important;
-  color: #fff !important;  
-}

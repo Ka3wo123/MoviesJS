@@ -1,12 +1,30 @@
-// Create a new file for the List component, e.g., List.js
+
 import React from "react";
+import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 
 const Linkers = () => {
+
+  const linkStyle = {
+    textDecoration: 'none',
+    color: '#fff'
+  };
+
   return (
     <ul>
-      <li className="nav-item">Rated movies</li>
-      <li className="nav-item">Explore movies</li>
-      <li className="nav-item">Add movie</li>      
+      <li className="nav-item">
+        <Link to="rated-movies" style={linkStyle}>
+          Rated movies
+        </Link>
+      </li>
+      <li className="nav-item">        
+        <HashLink style={linkStyle} to="/#explore">Explore movies</HashLink>
+      </li>
+      <li className="nav-item">
+        <Link to="add-movie" style={linkStyle}>
+          Add movie
+        </Link>
+      </li>
     </ul>
   );
 };

@@ -2,18 +2,22 @@
 import './App.css';
 import Navbar from './components/navBar';
 
+import { Outlet } from "react-router-dom";
+
 function App() {
   const appStyle = {
-    backgroundColor: '#414141', // Change this to the desired color
-    minHeight: '100vh', // Ensures the background color covers the entire viewport    
+    backgroundColor: '#414141',
+    minHeight: '100vh'
   };
-  return (   
-     
-      <div style={appStyle}>        
-        <Navbar />         
-        <footer>
-          <p className='copy'>MoviesJS &copy; | 2023</p></footer>                        
-      </div>    
+
+  return (
+    <div style={appStyle}>
+      <Navbar />      
+      <Outlet/>                
+      <footer>
+        <p className='copy'>MoviesJS &copy; | 2023</p>
+      </footer>       
+    </div>
   );
 }
 
