@@ -7,19 +7,24 @@ const LoginPage = () => {
                 <div className="user-container">
                     <p>New member</p>
                     <div className="login-register-container">
-                        <label className="label">Username</label>
+                        <label className="label">Login</label>
                         <input
                             type="text"
                             className="form-control custom-form-control"                                                        
                         />
-                        <label className="label">Password</label>
+                        <label className="label">Name</label>
                         <input
                             type="text"
                             className="form-control custom-form-control"                            
                         />
-                        <label className="label">Repeat password</label>
+                        <label className="label">Email</label>
                         <input
-                            type="text"
+                            type="email"
+                            className="form-control custom-form-control"                            
+                        />
+                        <label className="label">Password</label>
+                        <input
+                            type="password"
                             className="form-control custom-form-control"                            
                         />
                     </div>
@@ -29,14 +34,14 @@ const LoginPage = () => {
                 <div className="user-container">
                     <p>Already a user</p>
                     <div className="login-register-container">
-                    <label className="label">Username</label>
+                    <label className="label">Login</label>
                         <input
                             type="text"
                             className="form-control custom-form-control"                                                        
                         />
                         <label className="label">Password</label>
                         <input
-                            type="text"
+                            type="password"
                             className="form-control custom-form-control"                            
                         />
                     </div>
