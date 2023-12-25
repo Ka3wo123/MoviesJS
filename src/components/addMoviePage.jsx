@@ -4,21 +4,34 @@ import { useNavigate } from "react-router-dom";
 const AddMoviePage = () => {
 
     const navigate = useNavigate();
+    const [allMovies, setAllMovies] = useState([]);
 
     const [movieData, setMovieData] = useState({
         title: '',
         productionYear: '',
-        plot: ''
+        plot: '',
+        image: null
     });
 
-    const handleSubmit = () => {        
-        console.log("Movie Data submitted:", movieData); 
-        navigate('/');       
-    };
-
-    const handleCancel = () => {   
+    const handleSubmit = () => {
+        console.log("Movie Data submitted:", movieData);
+        setAllMovies((prevMovies) => [...prevMovies, movieData]);
         navigate('/');
     };
+
+    const handleCancel = () => {
+        navigate('/');
+    };
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          setMovieData({ ...movieData, image: file, imageUrl: URL.createObjectURL(file) });
+        } else {
+          setMovieData({ ...movieData, image: null, imageUrl: null });
+        }
+    };
+    
 
     const years = Array.from({ length: 124 }, (_, index) => (2023 - index).toString());
 
@@ -34,10 +47,10 @@ const AddMoviePage = () => {
                     onChange={(e) => setMovieData({ ...movieData, title: e.target.value })}
                 />
                 <label className="label">Production year</label>
-                <select 
-                className="form-select"
-                value={movieData.productionYear}                 
-                onChange={(e) => setMovieData({ ...movieData, productionYear: e.target.value })}>
+                <select
+                    className="form-select"
+                    value={movieData.productionYear}
+                    onChange={(e) => setMovieData({ ...movieData, productionYear: e.target.value })}>
                     <option value='' disabled selected>Select year</option>
                     {years.map((year) => (
                         <option key={year} value={year}>
@@ -45,6 +58,16 @@ const AddMoviePage = () => {
                         </option>
                     ))}
                 </select>
+                <label className="label" style={{ marginTop: '10px' }}>Movie poster</label>
+                <input
+                    type="file"
+                    accept=".jpg"
+                    style={{ marginBottom: '10px' }}
+                    onChange={handleImageChange}
+                />
+                {movieData.imageUrl && (
+                    <img src={movieData.imageUrl} alt="poster" style={{ marginBottom: '10px', maxWidth: '200px', maxHeight: '500px', width: 'auto', height: 'auto' }} />
+                )}
                 <label className="label">Plot</label>
                 <textarea
                     type="text"

@@ -27,7 +27,8 @@ const MovieTable = ({ movies }) => {
       title: movie.title,
       productionYear: movie.productionYear,
       image: movie.image,
-      plot: movie.plot,
+      plot: movie.content,
+      genre: movie.genre,
       visitCount: (existingMovies.find((m) => m.title === movie.title && m.productionYear === movie.productionYear)?.visitCount || 0) + 1,
     };
   
@@ -56,7 +57,7 @@ const MovieTable = ({ movies }) => {
         <Link
           style={linkStyle}
           to={`/details/${encodeURIComponent(`${movie.title}-${movie.productionYear}`)}`}
-          state={{ image: movie.image, plot: movie.plot, genre: movie.genre }}
+          state={{ image: movie.image, plot: movie.content, genre: movie.genre }}
           key={movie.id}
           onClick={() =>handleMovieClick(movie)}
         >

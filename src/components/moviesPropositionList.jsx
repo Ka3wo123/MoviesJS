@@ -12,7 +12,7 @@ const MovieSuggestionsList = ({ movieSuggestions, onMoviePick }) => {
                 <Link
                     style={linkStyle}
                     to={`/details/${encodeURIComponent(`${movie.title}-${movie.productionYear}`)}`}
-                    state={{ image: movie.image, plot: movie.plot }}
+                    state={{ image: movie.image, plot: movie.content }}
                     key={movie.id}
                     onClick={() => onMoviePick()}>
                     <div className="suggestion-item">

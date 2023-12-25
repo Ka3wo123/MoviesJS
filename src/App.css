@@ -21,6 +21,10 @@
     border-bottom: 2px solid #BC25BF;
   }
 
+  .search-bar-container {
+    position: relative;
+    display: inline-block;
+  }
 
   .search-pane {
     margin-right: auto;
@@ -35,6 +39,12 @@
     top: 32px;
     left: 145px;
     cursor: pointer;
+  }
+
+  .with-icon {
+    padding-left: 40px;
+    background: url('./images/searchIcon.png') no-repeat 10px center;
+    background-size: 30px 30px;
   }
 
   .nav-list {
@@ -109,6 +119,7 @@
     background-color: #000;
     border: 2px solid #BC25BF;
     border-radius: 3px;
+    max-width: 253px;
     cursor: pointer;
   }
 
@@ -123,20 +134,23 @@
     font-size: 15px;
     margin-left: 5px;
     font-weight: bold;
-    color: #fff;
+    color: #fff;    
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  .movie:hover {    
+  .movie:hover {
     box-shadow: 0 0 10px 5px #be6cc0;
     transition: box-shadow 0.3s;
   }
 
-  .carousel-container {  
+  .carousel-container {
     margin: 15px;
-  }  
+  }
 
-  .carousel {  
-    text-decoration: none;    
+  .carousel {
+    text-decoration: none;
     margin: 10px;
     padding: 10px;
     border-radius: 3px;
@@ -149,13 +163,13 @@
     height: 320px;
   }
 
-  .carousel:hover {            
+  .carousel:hover {
     box-shadow: 0 0 10px 5px #be6cc0;
     transition: box-shadow 0.3s;
   }
 
   .visit-count-tooltip {
-    position: absolute;    
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -163,23 +177,23 @@
     color: #fff;
     padding: 10px;
     border-radius: 5px;
-    display: none;   
+    display: none;
     width: 100px;
     height: 50px;
     z-index: 1;
-    
+
   }
-  
-  .carousel:hover .visit-count-tooltip {         
+
+  .carousel:hover .visit-count-tooltip {
     display: flex;
-    justify-content: center;    
+    justify-content: center;
   }
-  
-  .carousel img {   
-    border: 2px solid #BC25BF; 
+
+  .carousel img {
+    border: 2px solid #BC25BF;
     width: 190px;
     height: 280px;
-    object-fit: cover;    
+    object-fit: cover;
   }
 
   .carousel p {
@@ -321,25 +335,43 @@
 
   .custom-arrow {
     position: absolute;
-    top: 50%;    
+    top: 50%;
     transform: translateY(-50%);
     width: 30px;
     height: 30px;
     cursor: pointer;
     z-index: 1;
     transition: opacity 0.3s ease;
-}
+  }
 
-.custom-arrow.prev {
+  .custom-arrow.prev {
     left: -80px;
-}
+  }
 
-.custom-arrow.next {
+  .custom-arrow.next {
     right: -80px;
-}
+  }
 
-.custom-arrow:hover {
+  .custom-arrow:hover {
     opacity: 0.8;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
 }
 
-  
+.pagination button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color: #000;
+    border: 1px solid #BC25BF;
+    color: #BC25BF;
+}
+
+.pagination button.active {
+    background-color: #BC25BF;
+    color: #000;
+}

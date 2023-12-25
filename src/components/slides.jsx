@@ -1,4 +1,3 @@
-// MovieCarousel.js
 import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -19,12 +18,19 @@ const CustomArrow = ({ onClick, direction }) => {
 
 const MovieCarousel = () => {
     const [storedMovies, setStoredMovies] = useState([]);
+    const [storageClear, setStorageClear ] = useState(false);
 
     useEffect(() => {
         const storedMovies = localStorage.getItem('visitedMovies');
         const parsedMovies = storedMovies ? JSON.parse(storedMovies) : [];
         setStoredMovies(parsedMovies);
-    }, []);
+        setStorageClear(false);
+    }, [storageClear]);
+
+    const handleClear = () => {
+        localStorage.removeItem('visitedMovies');        
+        setStorageClear(true);
+    }
 
     const settings = {
         dots: true,
@@ -42,31 +48,39 @@ const MovieCarousel = () => {
         <div style={{ maxWidth: '860px', padding: '20px' }}>
             <h2 style={{ color: 'white' }}>Recently Viewed</h2>
             {storedMovies?.length > 0 ? (
-                <Slider {...settings} className='carousel-container'>
-                    {storedMovies.map((movie, index) => {
-                        return (
-                            <Link
-                                className='carousel'
-                                to={`/details/${encodeURIComponent(`${movie.title}-${movie.productionYear}`)}`}
-                                state={{ image: movie.image, plot: movie.plot, genre: movie.genre }}
-                                key={movie.title + movie.productionYear}>
-                                <div key={index} >
-                                    <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                                        <img src={movie.image} alt={movie.title} />
-                                        <div>
-                                            <p style={{ fontFamily: 'cursive' }}>{movie.plot}</p>
-                                            <p>Genre: {movie.genre}</p>
+                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                    <button type="button"
+                        className="btn btn-primary"
+                        style={{ backgroundColor: "#000", borderColor: "#BC25BF", color: "#BC25BF", width: '100px'}}
+                        onClick={() => handleClear()}>
+                            Clear
+                        </button>
+                    <Slider {...settings} className='carousel-container'>
+                        {storedMovies.map((movie, index) => {
+                            return (
+                                <Link
+                                    className='carousel'
+                                    to={`/details/${encodeURIComponent(`${movie.title}-${movie.productionYear}`)}`}
+                                    state={{ image: movie.image, plot: movie.content, genre: movie.genre }}
+                                    key={movie.title + movie.productionYear}>
+                                    <div key={index} >
+                                        <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                                            <img src={movie.image} alt={movie.title} />
+                                            <div>
+                                                <p style={{ fontFamily: 'cursive' }}>{movie.plot}</p>                                            
+                                                <p>Genre: {movie.genre}</p>
+                                            </div>
+                                        </div>
+                                        <p style={{ fontFamily: 'cursive' }}>{movie.title} ({movie.productionYear})</p>
+                                        <div className="visit-count-tooltip">
+                                            <p>Visits: {movie.visitCount || 0}</p>
                                         </div>
                                     </div>
-                                    <p style={{ fontFamily: 'cursive' }}>{movie.title} ({movie.productionYear})</p>
-                                    <div className="visit-count-tooltip">
-                                        <p>Visits: {movie.visitCount || 0}</p>
-                                    </div>
-                                </div>
-                            </Link>
-                        );
-                    })}
-                </Slider>
+                                </Link>
+                            );
+                        })}
+                    </Slider>
+                </div>
             ) : (
                 <p>No recently viewed movies</p>
             )

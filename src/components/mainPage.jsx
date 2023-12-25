@@ -1,19 +1,36 @@
 import MovieTable from "./moviesContent";
-import movies from "./movies";
 import { useEffect, useState } from "react";
 import MovieCarousel from "./slides";
+import axios from "axios";
 
 const MainPage = () => {
-    const genres = ['Action', 'Commedy', 'Horror', 'Family', 'Sci-Fi'];
+    const genres = ['Action', 'Comedy', 'Horror', 'Family', 'Sci-Fi'];
     const years = Array.from({ length: 124 }, (_, index) => (2023 - index).toString());
     const ratings = ['1+', '2+', '3+', '4+', '5+', '6+', '7+', '8+', '9+'];
+    const url = 'https://at.usermd.net/api/movies';
+    const moviesPerPage = 10;
 
     const [selectedGenre, setSelectedGenre] = useState('');
     const [selectedYear, setSelectedYear] = useState('');
     const [selectedRating, setSelectedRating] = useState('');
-    const [filteredMovies, setFilteredMovies] = useState(movies);    
+    const [filteredMovies, setFilteredMovies] = useState([]);
+    const [movies, setMovies] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageCount, setPageCount] = useState(0);
 
 
+    const fetchMovies = () => {
+        axios.get(url)
+            .then(response => {
+                setMovies(response.data);
+                setFilteredMovies(response.data);
+                setPageCount(Math.ceil(response.data.length / moviesPerPage));
+            }).catch(err => { console.err(err) })
+    }
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
 
 
     const handleFilteredMovies = () => {
@@ -29,13 +46,24 @@ const MainPage = () => {
         setFilteredMovies(filteredMovies);
     }
 
-    const handleClear = () => {        
+    const handleClear = () => {
         setFilteredMovies(movies);
     }
 
-    return (
-        <div>
+    useEffect(() => {
+        fetchMovies();
+    }, []);
 
+    useEffect(() => {
+        handleFilteredMovies();
+    }, [selectedGenre, selectedYear, selectedRating, currentPage]);
+    
+    const startIndex = (currentPage - 1) * moviesPerPage;
+    const endIndex = startIndex + moviesPerPage;
+
+    return (
+
+        <div>
             <div className="explore-movies">
                 <section id="explore" />
                 <p>Explore movies</p>
@@ -74,14 +102,25 @@ const MainPage = () => {
             </div>
 
 
-            {filteredMovies.length !== 0 ? <MovieTable movies={filteredMovies} /> :
+            {filteredMovies.length !== 0 ?
+                <>
+                    <MovieTable movies={filteredMovies.slice(startIndex, endIndex)} />
+                    <div className="pagination">
+                        {Array.from({ length: pageCount }, (_, index) => (
+                            <button key={index + 1} onClick={() => handlePageChange(index + 1)} className={currentPage === index + 1 ? 'active' : ''}>
+                                {index + 1}
+                            </button>
+                        ))}
+                    </div>
+                </>
+                :
                 <div style={{ display: "flex", justifyContent: "center", padding: 40 }}>
                     <strong style={{ color: "white" }}>No movies found!</strong>
                 </div>
             }
 
-            <div style={{display: 'flex', justifyContent: "center"}}>
-                <MovieCarousel  />
+            <div style={{ display: 'flex', justifyContent: "center" }}>
+                <MovieCarousel />
             </div>
 
         </div>
