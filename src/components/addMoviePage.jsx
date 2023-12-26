@@ -1,5 +1,7 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddMoviePage = () => {
 
@@ -87,6 +89,7 @@ const AddMoviePage = () => {
                     onClick={handleCancel}>Cancel</button>
 
             </div>
+            <ToastContainer/>
         </div>
     )
 

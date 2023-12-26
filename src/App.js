@@ -5,13 +5,14 @@ import { useEffect, useState } from 'react';
 
 import { Outlet } from "react-router-dom";
 import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const appStyle = {
     backgroundColor: '#414141',
     minHeight: '100vh'
   };
-  const url = 'https://at.usermd.net/api/movies';
+  const url = 'https://at.usermd.net/api/movies';  
 
   const [movies, setMovies] = useState([]);
 
@@ -27,6 +28,7 @@ function App() {
     <div style={appStyle}>
       <Navbar movies={movies}/>      
       <Outlet />
+      <ToastContainer/>
       <footer>
         <p className='copy'>MoviesJS &copy; | 2023</p>
       </footer>

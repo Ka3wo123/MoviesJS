@@ -61,7 +61,7 @@ const MovieCarousel = () => {
                                 <Link
                                     className='carousel'
                                     to={`/details/${encodeURIComponent(`${movie.title}-${movie.productionYear}`)}`}
-                                    state={{ image: movie.image, plot: movie.content, genre: movie.genre }}
+                                    state={{ image: movie.image, plot: movie.plot, genre: movie.genre }}
                                     key={movie.title + movie.productionYear}>
                                     <div key={index} >
                                         <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
