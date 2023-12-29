@@ -17,7 +17,6 @@ import AddMoviePage from './components/addMoviePage';
 import RatedMoviesPage from './components/ratedMoviesPage';
 import MovieDetailsPage from './components/movieDetails';
 import { isExpired } from 'react-jwt';
-import { toast } from 'react-toastify';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -27,13 +26,19 @@ root.render(
         <Route path='/' element={<App />}>
           <Route path='/' element={<MainPage />} />
           <Route path='/login' element={<LoginPage />} />
-          <Route path='/add-movie' element={isExpired(localStorage.getItem('token')) ? (
-            <Navigate replace to='/login' />
-
-          ) : (<AddMoviePage />)} />
+          <Route
+            path='/add-movie'
+            element={!localStorage.getItem('token') ? (
+              <Navigate replace to='/login' />
+            ) : isExpired(localStorage.getItem('token')) ? (
+              <Navigate replace to='/login' />
+            ) : (
+              <AddMoviePage />
+            )}
+          />
           <Route path='/rated-movies' element={<RatedMoviesPage />} />
           <Route path='/details/:titleYear' element={<MovieDetailsPage />} />
-          <Route path='*' element={<NotFound />}/>
+          <Route path='*' element={<NotFound />} />
         </Route>
       </Routes>
 

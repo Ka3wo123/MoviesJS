@@ -1,5 +1,5 @@
 import MovieTable from "./moviesContent";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import MovieCarousel from "./slides";
 import axios from "axios";
 
@@ -17,19 +17,29 @@ const MainPage = () => {
     const [movies, setMovies] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageCount, setPageCount] = useState(0);
+    const exploreMoviesRef = useRef(null);
 
 
     const fetchMovies = () => {
         axios.get(url)
-            .then(response => {
-                setMovies(response.data);
-                setFilteredMovies(response.data);
-                setPageCount(Math.ceil(response.data.length / moviesPerPage));
-            }).catch(err => { console.err(err) })
-    }
+          .then(response => {
+            
+            const filteredMovies = response.data.filter(movie => movie.title.trim() !== '' && movie.image !== null);
+      
+            setMovies(filteredMovies);
+            setFilteredMovies(filteredMovies);
+            setPageCount(Math.ceil(filteredMovies.length / moviesPerPage));
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      }
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
+        exploreMoviesRef.current.scrollIntoView({
+            behavior: "auto",
+        });
     };
 
 
@@ -50,6 +60,8 @@ const MainPage = () => {
         setFilteredMovies(movies);
     }
 
+
+
     useEffect(() => {
         fetchMovies();
     }, []);
@@ -57,14 +69,14 @@ const MainPage = () => {
     useEffect(() => {
         handleFilteredMovies();
     }, [selectedGenre, selectedYear, selectedRating, currentPage]);
-    
+
     const startIndex = (currentPage - 1) * moviesPerPage;
     const endIndex = startIndex + moviesPerPage;
 
     return (
 
         <div>
-            <div className="explore-movies">
+            <div className="explore-movies" ref={exploreMoviesRef}>
                 <section id="explore" />
                 <p>Explore movies</p>
             </div>
@@ -109,6 +121,7 @@ const MainPage = () => {
                         {Array.from({ length: pageCount }, (_, index) => (
                             <button key={index + 1} onClick={() => handlePageChange(index + 1)} className={currentPage === index + 1 ? 'active' : ''}>
                                 {index + 1}
+
                             </button>
                         ))}
                     </div>

@@ -6,8 +6,8 @@ import { toast } from "react-toastify";
 const LoginPage = () => {
     const navigate = useNavigate();
 
-    const [account, setAccount] = useState({ 
-        login: '',       
+    const [account, setAccount] = useState({
+        login: '',
         name: '',
         email: '',
         password: ''
@@ -18,9 +18,19 @@ const LoginPage = () => {
         password: ''
     })
 
-    
+
     const [errors, setErrors] = useState({});
     const [errors2, setErrors2] = useState({});
+    const toastOptions = {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+
+    }
 
 
     const validateSignUp = () => {
@@ -50,7 +60,7 @@ const LoginPage = () => {
 
         if (log.login.trim() === '') {
             validationErrors.login = 'Login is required!';
-        }        
+        }
         if (log.password.trim() === '') {
             validationErrors.password = 'Password is required!';
         }
@@ -60,7 +70,7 @@ const LoginPage = () => {
 
     const handleChangeRoute = () => {
         navigate('/');
-        window.location.reload();        
+        window.location.reload();
     };
 
     const handleSubmitCreate = (event) => {
@@ -76,13 +86,13 @@ const LoginPage = () => {
                 email: account.email,
                 password: account.password
             })
-            .then(() => {                
+            .then(() => {
                 handleChangeRoute();
             })
             .catch((error) => {
                 const errorMessages = {};
                 errorMessages.password =
-                    "Given username doesn't exist or the password is wrong!";
+                    "Given email already exists";
                 setErrors(errorMessages || {});
                 console.log(error);
             });
@@ -133,39 +143,39 @@ const LoginPage = () => {
 
     useEffect(() => {
         if (errors.login) {
-          toast.error(errors.login);
+            toast.error(errors.login, toastOptions);
         }
-      }, [errors.login]);
-      
-      useEffect(() => {
+    }, [errors.login]);
+
+    useEffect(() => {
         if (errors.name) {
-          toast.error(errors.name);
+            toast.error(errors.name, toastOptions);
         }
-      }, [errors.name]);
-      
-      useEffect(() => {
+    }, [errors.name]);
+
+    useEffect(() => {
         if (errors.email) {
-          toast.error(errors.email);
+            toast.error(errors.email, toastOptions);
         }
-      }, [errors.email]);
-      
-      useEffect(() => {
+    }, [errors.email]);
+
+    useEffect(() => {
         if (errors.password) {
-          toast.error(errors.password);
+            toast.error(errors.password, toastOptions);
         }
-      }, [errors.password]);
+    }, [errors.password]);
 
-      useEffect(() => {
+    useEffect(() => {
         if (errors2.login) {
-          toast.error(errors2.login);
+            toast.error(errors2.login, toastOptions);
         }
-      }, [errors2.login]);
+    }, [errors2.login]);
 
-      useEffect(() => {
+    useEffect(() => {
         if (errors2.password) {
-          toast.error(errors2.password);
+            toast.error(errors2.password, toastOptions);
         }
-      }, [errors2.password]);
+    }, [errors2.password]);
 
 
     return (
@@ -178,30 +188,30 @@ const LoginPage = () => {
                         <input
                             type="text"
                             className="form-control custom-form-control"
-                            onChange={handleChange}  
-                            name="login"                          
-                        />                        
+                            onChange={handleChange}
+                            name="login"
+                        />
                         <label className="label">Name</label>
                         <input
                             type="text"
                             className="form-control custom-form-control"
                             onChange={handleChange}
                             name="name"
-                        />                        
+                        />
                         <label className="label">Email</label>
                         <input
                             type="email"
                             className="form-control custom-form-control"
                             onChange={handleChange}
                             name="email"
-                        />                        
+                        />
                         <label className="label">Password</label>
                         <input
                             type="password"
                             className="form-control custom-form-control"
                             onChange={handleChange}
                             name="password"
-                        />                        
+                        />
                     </div>
                     <button type="submit" className="btn btn-primary" style={{ borderRadius: "10px", marginTop: "10px", backgroundColor: "#414141", borderColor: "#BC25BF", color: "#fff", width: "400px" }}>Create account</button>
                 </form>
@@ -215,16 +225,16 @@ const LoginPage = () => {
                             type="text"
                             className="form-control custom-form-control"
                             onChange={handleChangeLogin}
-                            name="login"                           
-                        />                        
+                            name="login"
+                        />
                         <label className="label">Password</label>
                         <input
                             type="password"
                             className="form-control custom-form-control"
                             onChange={handleChangeLogin}
-                            name="password"                           
-                        />                        
-                        
+                            name="password"
+                        />
+
                     </div>
                     <button type="submit" className="btn btn-primary" style={{ borderRadius: "10px", marginTop: "10px", backgroundColor: "#414141", borderColor: "#BC25BF", color: "#fff", width: "400px" }}>Log in</button>
                 </form>

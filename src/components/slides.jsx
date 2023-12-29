@@ -67,7 +67,7 @@ const MovieCarousel = () => {
                                         <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
                                             <img src={movie.image} alt={movie.title} />
                                             <div>
-                                                <p style={{ fontFamily: 'cursive' }}>{movie.plot}</p>                                            
+                                                <p style={{ fontFamily: 'cursive', overflow: 'hidden', textOverflow: 'ellipsis', maxHeight: '200px' }}>{movie.plot}</p>                                            
                                                 <p>Genre: {movie.genre}</p>
                                             </div>
                                         </div>

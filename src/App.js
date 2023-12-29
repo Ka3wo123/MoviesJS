@@ -19,7 +19,8 @@ function App() {
   useEffect(() => {
     axios.get(url)
       .then(response => {
-        setMovies(response.data);
+        const filteredMovies = response.data.filter(movie => movie.title.trim() !== '' && movie.image !== null);
+        setMovies(filteredMovies);
       }).catch(err => { console.err(err) })
 
   }, []);

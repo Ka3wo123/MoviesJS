@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import axios from "axios";
+import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -6,7 +7,15 @@ import 'react-toastify/dist/ReactToastify.css';
 const AddMoviePage = () => {
 
     const navigate = useNavigate();
-    const [allMovies, setAllMovies] = useState([]);
+
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            navigate("/login");
+        }
+    }, [navigate]);
 
     const [movieData, setMovieData] = useState({
         title: '',
@@ -16,9 +25,20 @@ const AddMoviePage = () => {
     });
 
     const handleSubmit = () => {
-        console.log("Movie Data submitted:", movieData);
-        setAllMovies((prevMovies) => [...prevMovies, movieData]);
-        navigate('/');
+        if (movieData.title && movieData.image && movieData.plot) {
+
+            axios({
+                method: 'post',
+                url: 'https://at.usermd.net/api/movies',
+                data: {
+                    title: movieData.title,
+                    image: movieData.image,
+                    content: movieData.plot
+                }
+            }).then(response => console.log(response))
+                .catch(err => console.log(err));
+            navigate('/');
+        }
     };
 
     const handleCancel = () => {
@@ -26,21 +46,19 @@ const AddMoviePage = () => {
     };
 
     const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-          setMovieData({ ...movieData, image: file, imageUrl: URL.createObjectURL(file) });
-        } else {
-          setMovieData({ ...movieData, image: null, imageUrl: null });
-        }
+        const imageURL = e.target.value;
+        setMovieData((prevData) => ({ ...prevData, image: imageURL }));
+
     };
-    
+
 
     const years = Array.from({ length: 124 }, (_, index) => (2023 - index).toString());
 
     return (
         <div>
             <div style={{ display: "flex", justifyContent: "center", color: "white", marginTop: "10px", fontSize: "30px" }}>Add new movie</div>
-            <div className="add-movie-container">
+            <form className="add-movie-container"
+                onSubmit={handleSubmit}>
                 <label className="label">Title</label>
                 <input
                     type="text"
@@ -62,13 +80,13 @@ const AddMoviePage = () => {
                 </select>
                 <label className="label" style={{ marginTop: '10px' }}>Movie poster</label>
                 <input
-                    type="file"
-                    accept=".jpg"
+                    type="url"
+                    placeholder="Enter URL of movie poster"
                     style={{ marginBottom: '10px' }}
                     onChange={handleImageChange}
                 />
-                {movieData.imageUrl && (
-                    <img src={movieData.imageUrl} alt="poster" style={{ marginBottom: '10px', maxWidth: '200px', maxHeight: '500px', width: 'auto', height: 'auto' }} />
+                {movieData.image && (
+                    <img src={movieData.image} alt="poster" style={{ marginBottom: '10px', maxWidth: '200px', maxHeight: '500px', width: 'auto', height: 'auto' }} />
                 )}
                 <label className="label">Plot</label>
                 <textarea
@@ -77,19 +95,20 @@ const AddMoviePage = () => {
                     value={movieData.plot}
                     onChange={(e) => setMovieData({ ...movieData, plot: e.target.value })}
                 />
-            </div>
-            <div className="button-container-add-movie">
-                <button type="button"
-                    className="btn btn-primary"
-                    style={{ backgroundColor: "#000", borderColor: "#BC25BF", color: "#BC25BF", width: '30vh' }}
-                    onClick={handleSubmit}>Add</button>
-                <button type="button"
-                    className="btn btn-primary"
-                    style={{ backgroundColor: "#000", borderColor: "#BC25BF", color: "#BC25BF", width: '30vh' }}
-                    onClick={handleCancel}>Cancel</button>
+                <div className="button-container-add-movie">
 
-            </div>
-            <ToastContainer/>
+                    <button type="submit"
+                        className="btn btn-primary"
+                        style={{ backgroundColor: "#000", borderColor: "#BC25BF", color: "#BC25BF", width: '30vh' }}>Add</button>
+                    <button type="reset"
+                        className="btn btn-primary"
+                        style={{ backgroundColor: "#000", borderColor: "#BC25BF", color: "#BC25BF", width: '30vh' }}
+                        onClick={handleCancel}>Cancel</button>
+
+                </div>
+            </form>
+
+            <ToastContainer />
         </div>
     )
 

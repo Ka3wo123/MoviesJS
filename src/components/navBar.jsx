@@ -10,8 +10,8 @@ const Navbar = ({ movies }) => {
     const [movieSuggestions, setMovieSuggestions] = useState([]);
     const [filteredMovies, setFilteredMovies] = useState(null);
     const user = decodeToken(localStorage.getItem('token'));
-    const isNotLogged = isExpired(localStorage.getItem('token'));  
-    const navigate = useNavigate();  
+    const isNotLogged = isExpired(localStorage.getItem('token'));
+    const navigate = useNavigate();
 
 
     const handleSearch = (query) => {
@@ -43,12 +43,12 @@ const Navbar = ({ movies }) => {
     }
 
     return (
-        <div className="navbar">
+        <div className="navbar">            
             <Logo />
             <SearchPane movieSuggestions={movieSuggestions} onSearch={handleSearch} onMoviePick={handleMoviePick} />
-            {user && <span style={{color: 'white'}}>{user.name}</span>}
+            {user && <span style={{ color: 'white' }}>{user.name}</span>}
             <Linkers />
-            <div>
+            <div>   
                 {isNotLogged ? <Link to="login">
                     <button
                         type="button"
@@ -68,7 +68,9 @@ const Navbar = ({ movies }) => {
                     </Link>
                 }
 
-            </div>
+
+            </div>  
+            
         </div>
     );
 };
