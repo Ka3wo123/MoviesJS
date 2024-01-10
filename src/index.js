@@ -28,13 +28,7 @@ root.render(
           <Route path='/login' element={<LoginPage />} />
           <Route
             path='/add-movie'
-            element={!localStorage.getItem('token') ? (
-              <Navigate replace to='/login' />
-            ) : isExpired(localStorage.getItem('token')) ? (
-              <Navigate replace to='/login' />
-            ) : (
-              <AddMoviePage />
-            )}
+            element={isExpired(localStorage.getItem('token')) ? <Navigate replace to='/login' /> : <AddMoviePage />}
           />
           <Route path='/rated-movies' element={<RatedMoviesPage />} />
           <Route path='/details/:titleYear' element={<MovieDetailsPage />} />

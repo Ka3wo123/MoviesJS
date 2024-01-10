@@ -12,11 +12,6 @@ const Linkers = () => {
 
   return (
     <ul>
-      <li className="nav-item">
-        <Link to="rated-movies" style={linkStyle}>
-          Rated movies
-        </Link>
-      </li>
       <li className="nav-item">        
         <HashLink style={linkStyle} to="/#explore">Explore movies</HashLink>
       </li>

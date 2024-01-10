@@ -4,15 +4,35 @@ import MovieCarousel from "./slides";
 import axios from "axios";
 
 const MainPage = () => {
-    const genres = ['Action', 'Comedy', 'Horror', 'Family', 'Sci-Fi'];
+    const genres = ["Akcja",
+        "Komedia",
+        "Dramat",
+        "Science Fiction",
+        "Horror",
+        "Romans",
+        "Fantasy",
+        "Thriller",
+        "Przygodowy",
+        "Animacja",
+        "Kryminał",
+        "Historyczny",
+        "Dokumentalny",
+        "Muzyczny",
+        "Western",
+        "Familijny",
+        "Mystery",
+        "Film Noir",
+        "Sportowy",
+        "Surrealistyczny",
+        "Superbohaterski",
+        "Psychologiczny",
+        "Edukacyjny"];
     const years = Array.from({ length: 124 }, (_, index) => (2023 - index).toString());
-    const ratings = ['1+', '2+', '3+', '4+', '5+', '6+', '7+', '8+', '9+'];
     const url = 'https://at.usermd.net/api/movies';
     const moviesPerPage = 10;
 
     const [selectedGenre, setSelectedGenre] = useState('');
     const [selectedYear, setSelectedYear] = useState('');
-    const [selectedRating, setSelectedRating] = useState('');
     const [filteredMovies, setFilteredMovies] = useState([]);
     const [movies, setMovies] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -22,18 +42,18 @@ const MainPage = () => {
 
     const fetchMovies = () => {
         axios.get(url)
-          .then(response => {
-            
-            const filteredMovies = response.data.filter(movie => movie.title.trim() !== '' && movie.image !== null);
-      
-            setMovies(filteredMovies);
-            setFilteredMovies(filteredMovies);
-            setPageCount(Math.ceil(filteredMovies.length / moviesPerPage));
-          })
-          .catch(err => {
-            console.error(err);
-          });
-      }
+            .then(response => {
+
+                const filteredMovies = response.data.filter(movie => movie.title.trim() !== '' && movie?.image);
+
+                setMovies(filteredMovies);
+                setFilteredMovies(filteredMovies);
+                setPageCount(Math.ceil(filteredMovies.length / moviesPerPage));
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -46,10 +66,7 @@ const MainPage = () => {
     const handleFilteredMovies = () => {
         const filteredMovies = movies.filter((movie) => {
             const genreMatch = !selectedGenre || movie.genre.includes(selectedGenre);
-            const yearMatch = !selectedYear || movie.productionYear === selectedYear;
-            const ratingMatch = !selectedRating || parseInt(movie.rating) >= parseInt(selectedRating);
-
-
+            const yearMatch = !selectedYear || movie.productionYear == selectedYear;
             return genreMatch && yearMatch;
         });
 
@@ -60,15 +77,10 @@ const MainPage = () => {
         setFilteredMovies(movies);
     }
 
-
-
     useEffect(() => {
         fetchMovies();
     }, []);
 
-    useEffect(() => {
-        handleFilteredMovies();
-    }, [selectedGenre, selectedYear, selectedRating, currentPage]);
 
     const startIndex = (currentPage - 1) * moviesPerPage;
     const endIndex = startIndex + moviesPerPage;
@@ -97,15 +109,6 @@ const MainPage = () => {
                     {years.map((year) => (
                         <option key={year} value={year}>
                             {year}
-                        </option>
-                    ))}
-                </select>
-                <select className='form-select'
-                    onChange={(e) => setSelectedRating(e.target.value)} >
-                    <option value="" >Select Rating</option>
-                    {ratings.map((rating) => (
-                        <option key={rating} value={rating}>
-                            {rating}
                         </option>
                     ))}
                 </select>

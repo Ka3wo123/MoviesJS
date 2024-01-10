@@ -20,10 +20,11 @@ function App() {
     axios.get(url)
       .then(response => {
         const filteredMovies = response.data.filter(movie => movie.title.trim() !== '' && movie.image !== null);
-        setMovies(filteredMovies);
+        setMovies(filteredMovies);           
+        console.log(filteredMovies);   
       }).catch(err => { console.err(err) })
 
-  }, []);
+  }, [movies]);
 
   return (
     <div style={appStyle}>

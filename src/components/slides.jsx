@@ -33,7 +33,7 @@ const MovieCarousel = () => {
     }
 
     const settings = {
-        dots: true,
+        dots: false,
         infinite: true,
         speed: 500,
         slidesToShow: storedMovies.length >= 2 ? 2 : 1,
@@ -61,7 +61,7 @@ const MovieCarousel = () => {
                                 <Link
                                     className='carousel'
                                     to={`/details/${encodeURIComponent(`${movie.title}-${movie.productionYear}`)}`}
-                                    state={{ image: movie.image, plot: movie.plot, genre: movie.genre }}
+                                    state={{ id: movie.id }}
                                     key={movie.title + movie.productionYear}>
                                     <div key={index} >
                                         <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>

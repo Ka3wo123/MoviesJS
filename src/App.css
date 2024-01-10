@@ -82,6 +82,16 @@
     color: #fff !important;
   }
 
+  .btn-primary-deletion{
+    background-color: #f00 !important;
+    color: #000 !important;
+  }
+
+  .btn-primary-deletion:hover {
+    background-color: #000 !important; 
+    color: #fff !important;   
+  }
+
 
 
   .explore-movies {
@@ -104,6 +114,7 @@
     width: 30vh !important;
     border-color: #000 !important;
     overflow-y: auto;
+    margin-bottom: 10px;
   }
 
   .movie-table {

@@ -1,19 +1,20 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { isExpired } from "react-jwt";
 
 const AddMoviePage = () => {
 
     const navigate = useNavigate();
 
-
     useEffect(() => {
         const token = localStorage.getItem("token");
 
-        if (!token) {
+        if (isExpired(token)) {
             navigate("/login");
+
         }
     }, [navigate]);
 
@@ -21,23 +22,27 @@ const AddMoviePage = () => {
         title: '',
         productionYear: '',
         plot: '',
-        image: null
+        image: null,
+        genre: ''
     });
 
     const handleSubmit = () => {
-        if (movieData.title && movieData.image && movieData.plot) {
-
+        if (movieData.title && movieData.image && movieData.plot && movieData.genre && movieData.productionYear) {
             axios({
                 method: 'post',
                 url: 'https://at.usermd.net/api/movies',
                 data: {
                     title: movieData.title,
                     image: movieData.image,
-                    content: movieData.plot
+                    content: movieData.plot,
+                    genre: movieData.genre,
+                    productionYear: movieData.productionYear
                 }
             }).then(response => console.log(response))
                 .catch(err => console.log(err));
             navigate('/');
+        } else {
+            toast.error('You need to fill each element')
         }
     };
 
@@ -53,6 +58,31 @@ const AddMoviePage = () => {
 
 
     const years = Array.from({ length: 124 }, (_, index) => (2023 - index).toString());
+    const genres = [
+        "Akcja",
+        "Komedia",
+        "Dramat",
+        "Science Fiction",
+        "Horror",
+        "Romans",
+        "Fantasy",
+        "Thriller",
+        "Przygodowy",
+        "Animacja",
+        "Kryminał",
+        "Historyczny",
+        "Dokumentalny",
+        "Muzyczny",
+        "Western",
+        "Familijny",
+        "Mystery",
+        "Film Noir",
+        "Sportowy",
+        "Surrealistyczny",
+        "Superbohaterski",
+        "Psychologiczny",
+        "Edukacyjny"
+    ];
 
     return (
         <div>
@@ -71,14 +101,25 @@ const AddMoviePage = () => {
                     className="form-select"
                     value={movieData.productionYear}
                     onChange={(e) => setMovieData({ ...movieData, productionYear: e.target.value })}>
-                    <option value='' disabled selected>Select year</option>
+                    <option value='' disabled>Select year</option>
                     {years.map((year) => (
                         <option key={year} value={year}>
                             {year}
                         </option>
                     ))}
                 </select>
-                <label className="label" style={{ marginTop: '10px' }}>Movie poster</label>
+                <label className="label">Genre</label>
+                <select
+                    className="form-select"
+                    value={movieData.genre}
+                    onChange={(e) => setMovieData({ ...movieData, genre: e.target.value })}>
+                    <option value='' disabled>Select genre</option>
+                    {genres.map((genre) => (
+                        <option key={genre} value={genre}>
+                            {genre}
+                        </option>
+                    ))}
+                </select>
                 <input
                     type="url"
                     placeholder="Enter URL of movie poster"
