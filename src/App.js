@@ -32,7 +32,7 @@ function App() {
       <Outlet />
       <ToastContainer/>
       <footer>
-        <p className='copy'>MoviesJS &copy; | 2023</p>
+        <p className='copy'>MoviesJS &copy; | 2024</p>
       </footer>
     </div>
   );
